@@ -6,12 +6,15 @@ namespace Asteroids
 {
     public class Moving : MonoBehaviour
     {
+        #region
         public float acceleration = 5f;
         public float rotationSpeed = 5f;
         public float maxVelocity = 3f;
 
         private Rigidbody2D rigid;
+        #endregion
 
+        #region Methods/Functions
         // Use this for initialization
         void Start()
         {
@@ -21,15 +24,18 @@ namespace Asteroids
         // Update is called once per frame
         void Update()
         {
-            LimitVelocity();
+          LimitVelocity();
         }
-
+        
         //Capping the velocity when it goes too high
         void LimitVelocity()
         {
+            // Made a copy of rigid.velocity
             Vector3 vel = rigid.velocity;
+            // Checking copy to see if it's too high
             if(vel.magnitude > maxVelocity)
             {
+                // Capping velocity down to maxVelocity
                 vel = vel.normalized * maxVelocity;
             }
             // Applies the copied varible to velocity
@@ -45,5 +51,15 @@ namespace Asteroids
         {
             rigid.rotation -= angleOffset * rotationSpeed * Time.deltaTime;
         }
+
+        public void RotateLeft()
+        {
+            rigid.rotation += rotationSpeed * Time.deltaTime;
+        }
+        public void RotateRight()
+        {
+            rigid.rotation -= rotationSpeed * Time.deltaTime;
+        }
+#endregion
     }
 }

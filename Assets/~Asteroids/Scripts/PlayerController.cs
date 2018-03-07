@@ -21,7 +21,22 @@ namespace Asteroids
             }
             // Check if horizontal axis (left or right arrow) is pressed
             // Rotate in correct direction
-            movement.Rotate(inputH);
+            //movement.Rotate(inputH);
+
+            // If right arrow is pressed
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                movement.RotateRight();
+            }
+             // Rotate right
+
+            // If left arrow is pressed
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                movement.RotateLeft();
+            }
+                
+            //Rotate left
         }
     }
 }
