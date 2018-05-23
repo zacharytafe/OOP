@@ -2,31 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Minesweeper2D
+namespace Minesweeper
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class Tile : MonoBehaviour
     {
-        // Store x and y coordinate in array for later use
-        public int x = 0;
-        public int y = 0;
-        public bool isMine = false;
-        public bool isRevealed = false;
+        public int x, y;
+        public bool isMine = false; //Is the current tile a mine?
+        public bool isRevealed = false; //Has the tile been revealed?
         [Header("References")]
-        public Sprite[] emptySprites;
-        public Sprite[] mineSprites;
+        public Sprite[] emptySprites; //List of empty sprites
+        public Sprite[] mineSprites; //The mine sprites
 
         private SpriteRenderer rend;
 
-       
         void Awake()
         {
-            // Grab reference to sprite renderer
-            rend = GetComponent<SpriteRenderer>();
+            //Grab reference to sprie renderer
+            rend = GetComponent<SpriteRenderer>(); 
         }
 
         void Start()
         {
+            //Each tile has a 5% chance of being a mine
             isMine = Random.value < .05f;
         }
 
@@ -34,24 +32,17 @@ namespace Minesweeper2D
         {
             // Flags the tile as being revealed
             isRevealed = true;
-            // Check if the tile is a mine
-            if (isMine)
+            // Check if tile is a mine
+            if(isMine)
             {
                 // Sets sprite to mine sprite
                 rend.sprite = mineSprites[mineState];
             }
             else
             {
-                // Sets sprites to appropriate texture based on adjacent mines
+                // Sets sprite to appropriate texture
                 rend.sprite = emptySprites[adjacentMines];
             }
-        }
-       
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
     }
 }
