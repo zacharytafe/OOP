@@ -103,5 +103,33 @@ namespace Minesweeper
                 SelectATile();
             }
         }
+        
+        void FFuncover(int x, int y, bool[,] visited)
+        {
+            // Is x and y within bounds of the grid?
+            if(x >= 0 && y >= 0 &&
+               x < width && y < height)
+            {
+                // Have these coordinates been visited?
+                if (visited[x, y])
+                    return;
+                // reveal tile in that x and y coordinate
+                Tile tile = tiles[x, y];
+                int adjacentMines = GetAdjacentMineCount(tile);
+                tile.Reveal(adjacentMines);
+
+                // If there were no adjacent mines around that tile
+                if (adjacentMines == 0)
+                {
+                    // This tile has been visited
+                    visited[x, y] = true;
+                    // visit all other tiles around this tile
+                    FFuncover(x - 1, y, visited);
+                    FFuncover(x + 1, y, visited);
+                    FFuncover(x, y - 1, visited);
+                    FFuncover(x, y + 1, visited);
+                }
+            }
+        }
     }
 }
